@@ -1,0 +1,30 @@
+{
+  "architecture": "hunyuan",
+  "model_name": "hunyuan3b_hf",
+  "seq_len": 32768,
+  "vocab_size": 128256,
+  "num_layers": 32,
+  "num_attention_heads": 20,
+  "hidden_size": 2560,
+  "ffn_hidden_size": 9216,
+  "hidden_act": "silu",
+  "rope_type": "norm",
+  "mlp_gate": true,
+  "layernorm": false,
+  "logit_scale": 1.0,
+  "kv_heads": 10,
+  "norm_eps": 1e-05,
+  "rope_base": 532032.0625,
+  "multi_query_group_num": 2,
+  "kv_channels": 128,
+  "use_cache": true,
+  "torch_dtype": "float16",
+  "auto_map": {
+    "AutoConfig": "configuration_hunyuan.HunYuanConfig",
+    "AutoModel": "modeling_hunyuan.HunYuanChatModel",
+    "AutoModelForCausalLM": "modeling_hunyuan.HunYuanChatModel"
+  },
+  "architectures": [
+    "HunYuanChatModel"
+  ]
+}
