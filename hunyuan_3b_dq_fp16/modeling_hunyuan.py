@@ -40,7 +40,6 @@ from transformers.modeling_utils import PreTrainedModel
 from transformers.processing_utils import Unpack
 from transformers.pytorch_utils import ALL_LAYERNORM_LAYERS
 from transformers.utils import (
-    LossKwargs,
     logging,
 )
 from .configuration_hunyuan import HunYuanConfig
@@ -259,9 +258,6 @@ class HunYuanAttention(nn.Module):
         cos, sin = position_embeddings
         query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin)
 
-        query_states = self.q_layernorm(query_states)
-        key_states = self.k_layernorm(key_states)
-
         if past_key_value is not None:
             # sin and cos are specific to RoPE models; cache_position needed for the static cache
             cache_kwargs = {"sin": sin, "cos": cos, "cache_position": cache_position}
@@ -348,6 +344,9 @@ class HunYuanSdpaAttention(HunYuanAttention):
 
         cos, sin = position_embeddings
         query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin)
+
+        query_states = self.q_layernorm(query_states)
+        key_states = self.k_layernorm(key_states)
 
         if past_key_value is not None:
             # sin and cos are specific to RoPE models; cache_position needed for the static cache
