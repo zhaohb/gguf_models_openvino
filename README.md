@@ -1,6 +1,7 @@
 ## Update Notes
 ### 2024/12/12
 1. Use gguf model to convert to pytorch format. Now only hunyuan-3b model is tested.
+2. Hunyuan's pytorch model can now be accelerated using OpenVINO.
 
 ## Running Guide
 ### Installation
@@ -8,7 +9,7 @@
 
 ```bash
 git clone https://github.com/zhaohb/hunyuan-torch.git
-pip install transformers==4.44.2
+pip install transformers==4.46.3
 pip install torch
 pip install torchvision
 
