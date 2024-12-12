@@ -21,8 +21,8 @@
   "torch_dtype": "float16",
   "auto_map": {
     "AutoConfig": "configuration_hunyuan.HunYuanConfig",
-    "AutoModel": "modeling_hunyuan.HunYuanChatModel",
-    "AutoModelForCausalLM": "modeling_hunyuan.HunYuanChatModel"
+    "AutoModel": "modeling_hunyuan.HunYuanForCausalLM",
+    "AutoModelForCausalLM": "modeling_hunyuan.HunYuanForCausalLM"
   },
   "architectures": [
     "HunYuanChatModel"
