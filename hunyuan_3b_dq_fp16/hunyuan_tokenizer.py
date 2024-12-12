@@ -1,4 +1,5 @@
 import json
+import torch
 from functools import lru_cache
 
 import regex as re
@@ -127,3 +128,38 @@ class HunYuanTokenizer:
         text = "".join(tokens)
         text = bytearray([self.byte_decoder[c] for c in text]).decode("utf-8", errors="replace")
         return text
+
+def encode_tokens(tokenizer, special_tokens, string, bos=True, device='cpu'):
+    text_list = [string]
+    for token in special_tokens:
+        new_text_list = []
+        for text in text_list:
+            text = text.split(token)
+            new_text_list.extend([e for pair in zip(text, [token] * (len(text) - 1)) for e in pair] + [text[-1]])
+        text_list = new_text_list
+
+    tokens = []
+    for text in text_list:
+        if not text:
+            continue
+        if text in special_tokens:
+            tokens.append(int(special_tokens[text]))
+        else:
+            tokens.extend(tokenizer.encode(text))
+    if bos:
+        # some spm model has wrong set bos
+        bos_id = tokenizer.bos_id() if tokenizer.bos_id() > 0 else 2
+        tokens = [bos_id] + tokens
+    return torch.tensor(tokens, dtype=torch.int, device=device)
+
+if __name__ == '__main__':
+    prompt='who you are'
+    tokenizer_path = ("vocab.json", "merges.txt", "tokenizer_config.json")
+    tokenizer = HunYuanTokenizer(*tokenizer_path)
+    tokenizer_conf = json.load(open("tokenizer_config.json"))
+    special_tokens = {v["content"]: k for k, v in tokenizer_conf.get("added_tokens_decoder", {}).items()}
+    encoded = encode_tokens(tokenizer, special_tokens, prompt,
+                            bos=tokenizer_conf.get("add_bos_token", False))
+    print("prompt: ", prompt)
+    print("prompt token id: ", encoded)
+    print("prompt decode: ", tokenizer.decode(encoded.tolist()))
