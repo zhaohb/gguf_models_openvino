@@ -77,7 +77,7 @@ answer:  你好，我是混元助手，一个由腾讯开发的大型语言模�
 
 LLM Model First token latency: 44.60 ms, Output len: 13, Avage token latency: 34.10 ms
 ```
-### LNL iGPU INT4 compress + INT8 dynamic quant + insertslice opt
+### LNL iGPU INT4 compress + INT8 dynamic quant + insertslice opt (You must use this ov branch: https://github.com/zhaohb/openvino/tree/hunyuan_2024_6)
 ```shell
 python test_ov.py -m /path/to/hunyuan_3b -ov hunyuan-ov -d GPU -llm_int4_com -llm_int8_quant
 INFO:nncf:NNCF initialized successfully. Supported frameworks detected: torch, openvino
