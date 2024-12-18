@@ -508,10 +508,12 @@ class OVHunYuanForCausalLM(GenerationMixin):
 
         ov_config = {
             "DYNAMIC_QUANTIZATION_GROUP_SIZE": "128",  #32
+            "KV_CACHE_PRECISION":"f16",
             "PERFORMANCE_HINT": "LATENCY",
             "NUM_STREAMS": "1",
             "CACHE_DIR": "",
         }
+        kv_cache_config = {"KV_CACHE_PRECISION":"f16"}
 
         if llm_int4_compress:
             self.llm_model = core.read_model(Path(f"{ov_model_path}/llm_stateful_int4.xml"))
@@ -520,7 +522,7 @@ class OVHunYuanForCausalLM(GenerationMixin):
         if llm_int8_quant:
             self.llm_compiled_model = core.compile_model(self.llm_model, device, config = ov_config)
         else:
-            self.llm_compiled_model = core.compile_model(self.llm_model, device)
+            self.llm_compiled_model = core.compile_model(self.llm_model, device, config = kv_cache_config)
             
         self.llm_request = self.llm_compiled_model.create_infer_request()
 
