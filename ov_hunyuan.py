@@ -1,7 +1,6 @@
 import torch
 from torch import nn
 import torch.nn.functional as F
-import torchvision.transforms as T
 from transformers import AutoModelForCausalLM,AutoTokenizer
 from transformers import AutoConfig
 from typing import List
@@ -11,19 +10,9 @@ from transformers.generation import GenerationConfig, GenerationMixin
 from transformers.cache_utils import Cache, DynamicCache
 import numpy as np
 from openvino.runtime import opset13
-from torchvision.transforms.v2 import (
-    Compose,
-    Resize,
-    InterpolationMode,
-    ToImage,
-    ToDtype,
-    Normalize,
-)
 from transformers.modeling_outputs import (
     CausalLMOutputWithPast,
 )
-import PIL
-from PIL import Image
 
 from typing import Optional, Tuple, List, Union
 

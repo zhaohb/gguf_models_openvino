@@ -77,6 +77,22 @@ answer:  你好，我是混元助手，一个由腾讯开发的大型语言模�
 
 LLM Model First token latency: 44.60 ms, Output len: 13, Avage token latency: 34.10 ms
 ```
+### LNL iGPU INT4 compress + INT8 dynamic quant + insertslice opt
+```shell
+python test_ov.py -m /path/to/hunyuan_3b -ov hunyuan-ov -d GPU -llm_int4_com -llm_int8_quant
+INFO:nncf:NNCF initialized successfully. Supported frameworks detected: torch, openvino
+OpenVINO version
+ 2024.6.0-17418-38261652a93-refs/pull/28116/head
+
+
+query:  你是谁?
+answer:  你好，我是腾讯混元大模型，一个由腾讯研发的大语言模型。我具备理解人类语言的能力，能够应对各种不同场景的问答需求 ，例如：回答问题、提供建议等。你可以向我提问任何问题，我会尽我所能为你提供准确、有用的信息。<|eos|>
+
+性能测试中...
+
+
+LLM Model First token latency: 37.58 ms, Output len: 11, Avage token latency: 25.31 ms
+```
 ### Parsing test_ov.py's arguments :
 ```shell
 python3 test_ov.py  --help
